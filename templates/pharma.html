@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 40%;
+          float: right;
+        }
+        
+
+        table thead {
+            background-color: lightgreen;
+        }
+        
+        table tbody {
+            background-color: rgb(5, 162, 253);
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 5px;
+        }
+        
+        
+
+        .mapouter {
+            float: left;
+        }
+
+        p button {
+            background-color: rgb(29, 102, 185);
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 57px;
+            cursor: pointer;
+            border-radius: 12px;        
+        }
+
+        </style>
+        <script type="text/javascript">
+            window.onload = function () {
+                //Build an array containing Customer records.
+                var customers = new Array();
+                customers.push(["Crocin", 1, "-", 1]);
+                
+     
+                //Add the data rows.
+                for (var i = 0; i < customers.length; i++) {
+                    AddRow(customers[i][0], customers[i][1], customers[i][2], customers[i][3]);
+                }
+            };
+     
+            function Add() {
+                var txtName = document.getElementById("txtName");
+                var txtMorning = document.getElementById("txtMorning");
+                var txtAfternoon = document.getElementById("txtAfternoon");
+                var txEvening = document.getElementById("txtEvening");
+                AddRow(txtName.value, txtMorning.value, txtAfternoon.value, txEvening.value);
+                txtName.value = "";
+                txtMorning.value = "";
+                txtAfternoon.value = "";
+                txEvening.value = "";
+            };
+     
+            function Remove(button) {
+                //Determine the reference of the Row using the Button.
+                var row = button.parentNode.parentNode;
+                var name = row.getElementsByTagName("TD")[0].innerHTML;
+                if (confirm("Do you want to delete: " + name)) {
+     
+                    //Get the reference of the Table.
+                    var table = document.getElementById("tblCustomers");
+     
+                    //Delete the Table row using it's Index.
+                    table.deleteRow(row.rowIndex);
+                }
+            };
+     
+            function AddRow(name, morning, afternoon, evening) {
+                //Get the reference of the Table's TBODY element.
+                var tBody = document.getElementById("tblCustomers").getElementsByTagName("TBODY")[0];
+     
+                //Add Row.
+                row = tBody.insertRow(-1);
+     
+                //Add Name cell.
+                var cell = row.insertCell(-1);
+                cell.innerHTML = name;
+     
+                //Add Country cell.
+                cell = row.insertCell(-1);
+                cell.innerHTML = morning;
+
+                var cell = row.insertCell(-1);
+                cell.innerHTML = afternoon;
+
+                var cell = row.insertCell(-1);
+                cell.innerHTML = evening;
+     
+                //Add Button cell.
+                cell = row.insertCell(-1);
+                var btnRemove = document.createElement("INPUT");
+                btnRemove.type = "button";
+                btnRemove.value = "Remove";
+                btnRemove.setAttribute("onclick", "Remove(this);");
+                cell.appendChild(btnRemove);
+            }
+        </script>
+</head>
+<body style="background-image: url('static/img/pharma.jpg');">
+    <h2 style="padding-left: 10%;">Doctors Near You</h2>
+    <div class="mapouter">
+        <div class="gmap_canvas">
+            <iframe width="482" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=doctors%20near%20me&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+            </iframe>
+            <a href="https://www.embedgooglemap.net/blog/nordvpn-coupon-code/">nord vpn codes</a>
+        </div>
+        <style>.mapouter{position:relative;text-align:right;height:500px;width:482px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:482px;}
+        </style>
+        </div>
+
+    <table align="right" id="tblCustomers">
+        <h2 style="padding-left: 65%;">Tablets</h2>
+        <thead>
+        <tr>
+          <th>Medicine Name</th>
+          <th>Morning</th>
+          <th>Afternoon</th>
+          <th>Evening</th>
+          <th>Action</th>
+        </tr>
+    </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><input type="text" id="txtName" /></td>
+                <td><input type="text" id="txtMorning" width="10%"/></td>
+                <td><input type="text" id="txtAfternoon" width="10%"/></td>
+                <td><input type="text" id="txtEvening" width="10%"/></td>
+                <td><input type="button" onclick="Add()" value="Add" /></td>
+            </tr>
+        </tfoot>
+      </table>
+      <div class="Back">
+      <p><a href="{{ url_for('index') }}"><button>Back</button></a></p> 
+    </div>
+</body>
+</html>
